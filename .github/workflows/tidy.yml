@@ -1,5 +1,4 @@
 name: format-html
-
 on:
   push:
     branches: [ main ]
@@ -10,54 +9,53 @@ on:
     paths:
       - '**.html'
   workflow_dispatch:
-    branches: [ main ]
-    paths:
-      - '**.html'
 
 jobs:
   tidy:
     runs-on: ubuntu-latest
-    
+    permissions:
+      contents: write
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        
-    - name: Install HTML Tidy
-      run: sudo apt-get install -y tidy
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       
-    - name: Run on changed HTML files
-      run: |
-        # Get list of changed HTML files
-        CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.html$' || echo "")
-        
-        if [ -z "$CHANGED_FILES" ]; then
-          echo "No HTML files changed"
-          exit 0
-        fi
-        
-        # Create output directory
-        mkdir -p tidy-results
-        
-        # Process each changed HTML file
-        for file in $CHANGED_FILES; do
-          echo "Processing $file"
-          tidy -q -e -config .tidyrc "$file" > "tidy-results/$(basename "$file").log" 2>&1 || true
-        done
-        
-    - name: Upload results
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: tidy-results
-        path: tidy-results
-        
-    # Optional: Commit cleaned files
-    - name: Commit cleaned files
-      if: success()
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add .
-        git commit -m "Auto-format HTML with Tidy" || echo "No changes to commit"
-        git push
+      - name: Install HTML Tidy
+        run: sudo apt-get install -y tidy
+      
+      - name: Format HTML files
+        run: |
+          # Handle different event types
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            # For manual triggers, process all HTML files
+            CHANGED_FILES=$(find . -name "*.html")
+          elif [[ "${{ github.event_name }}" == "push" || "${{ github.event_name }}" == "pull_request" ]]; then
+            # For push/PR events, get changed files
+            if [[ -n "${{ github.event.before }}" ]]; then
+              CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.html$' || echo "")
+            else
+              # Fallback if before is not available
+              CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | grep '\.html$' || echo "")
+            fi
+          fi
+          
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No HTML files changed"
+            exit 0
+          fi
+          
+          # Process each changed HTML file
+          for file in $CHANGED_FILES; do
+            if [ -f "$file" ]; then
+              echo "Formatting $file"
+              tidy -config .tidyrc "$file" > /dev/null 2>&1 || true
+            fi
+          done
+      
+      - name: Commit formatted files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git diff --staged --quiet || git commit -m "Auto-format HTML with Tidy"
+          git push || echo "No changes to push"

@@ -2,6 +2,7 @@ char-encoding: utf8
 
 indent: auto
 indent-spaces: 2
+vertical-space: yes
 wrap: 80
 
 markup: yes
@@ -25,4 +26,5 @@ new-blocklevel-tags: cfoutput, cfquery
 new-empty-tags: cfelse
 custom-tags: blocklevel
 
+tidy-mark: no
 write-back: yes

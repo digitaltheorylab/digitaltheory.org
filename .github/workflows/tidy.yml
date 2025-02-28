@@ -1,0 +1,59 @@
+name: Format HTML
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.html'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**.html'
+
+jobs:
+  tidy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        
+    - name: Install HTML Tidy
+      run: sudo apt-get install -y tidy
+      
+    - name: Run on changed HTML files
+      run: |
+        # Get list of changed HTML files
+        CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.html$' || echo "")
+        
+        if [ -z "$CHANGED_FILES" ]; then
+          echo "No HTML files changed"
+          exit 0
+        fi
+        
+        # Create output directory
+        mkdir -p tidy-results
+        
+        # Process each changed HTML file
+        for file in $CHANGED_FILES; do
+          echo "Processing $file"
+          tidy -q -e -config .tidyrc "$file" > "tidy-results/$(basename "$file").log" 2>&1 || true
+        done
+        
+    - name: Upload results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: tidy-results
+        path: tidy-results
+        
+    # Optional: Commit cleaned files
+    - name: Commit cleaned files
+      if: success()
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Auto-format HTML with Tidy" || echo "No changes to commit"
+        git push

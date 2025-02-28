@@ -18,6 +18,28 @@ This is the website for the Digital Theory Lab.
 └── research                Research page
 ```
 
+## Viewing the site locally
+
+The site uses JavaScript to manage a few components. This means you need to run
+a web server to view the site locally. The easiest way to do this is via the
+command line:
+
+1. On the command line, navigate to your local copy of the site
+
+   ```sh
+   cd /path/to/the/site
+   ```
+
+2. Run the following:
+
+   ```sh
+   python3 -m http.server 8080
+   ```
+
+   This will start a web server
+
+3. In a web browser, visit `localhost:8080` to view the site
+
 
 ## Making changes
 

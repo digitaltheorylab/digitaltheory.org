@@ -3,19 +3,23 @@
   src:url("../assets/IosevkaTermNerdFontMono-Regular-Subset.ttf");
 }
 
-html, body {
+html {
+  height: 95%;
+  border: solid;
+  border-radius: 1rem;
+  border-color: rgb(61, 0, 204);
+  margin: 1rem;
   background-color: black;
   color: rgb(142, 205, 0);
   font-family: iosevka-nerd-term;
 }
 
 .container {
-  width: 85%;
+  width: 90%;
   margin: 0 auto;
 }
 
 header {
-  color: rgb(61, 0, 204);
   font-size: 20px;
   padding: 1rem 0;
 }
@@ -24,10 +28,6 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.logo a:hover {
-  color: white;
 }
 
 nav ul {
@@ -41,16 +41,14 @@ nav ul li {
   margin-left: 1.5rem;
 }
 
-nav ul li a {
-  text-decoration: none;
-}
-
-nav ul li a:hover {
-  color: white;
-}
 
 a, a:visited {
   color: inherit;
   text-decoration: none;
   cursor: pointer;
 }
+
+a:hover {
+  color: white;
+}
+

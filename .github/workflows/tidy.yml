@@ -9,6 +9,10 @@ on:
     branches: [ main ]
     paths:
       - '**.html'
+  workflow_dispatch:
+    branches: [ main ]
+    paths:
+      - '**.html'
 
 jobs:
   tidy:

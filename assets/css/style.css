@@ -10,6 +10,7 @@ html {
   border-color: rgb(61, 0, 204);
   margin: 1rem;
   background-color: black;
+  font-size: clamp(12px, 2vw, 16px);
   color: rgb(142, 205, 0);
   font-family: iosevka-nerd-term;
 }
@@ -17,10 +18,11 @@ html {
 .container {
   width: 90%;
   margin: 0 auto;
+  overflow: auto;
 }
 
 header {
-  font-size: 20px;
+  font-size: clamp(12px, 2.5vw, 20px);
   padding: 1rem 0;
 }
 
@@ -40,7 +42,6 @@ nav ul {
 nav ul li {
   margin-left: 1.5rem;
 }
-
 
 a, a:visited {
   color: inherit;

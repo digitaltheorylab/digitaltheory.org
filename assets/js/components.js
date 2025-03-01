@@ -12,12 +12,12 @@ class NavBar extends HTMLElement {
     this.innerHTML = `
       <header>
         <div class="container header-content">
-          <div class="logo"><a href="./" ${this.isActive("index.html")}>Digital Theory Lab</a></div>
+          <div class="logo"><a href="./">Digital Theory Lab</a></div>
           <nav>
             <ul>
-              <li><a href="research" ${this.isActive("index.html")}>Research</a></li>
-              <li><a href="people" ${this.isActive("index.html")}>People</a></li>
-              <li><a href="events" ${this.isActive("index.html")}>Events</a></li>
+              <li><a href="research" ${this.isActive("research")}>Research</a></li>
+              <li><a href="people" ${this.isActive("people")}>People</a></li>
+              <li><a href="events" ${this.isActive("events")}>Events</a></li>
             </ul>
           </nav>
         </div>
@@ -34,7 +34,9 @@ class NavBar extends HTMLElement {
    * page, otherwise an empty string
    */
   isActive(page) {
-    const currentPage = window.location.pathname.split("/").pop() || "index.html";
+    const pathname = window.location.pathname
+    const currentPage = pathname.split("/").filter(x => x.trim() != "").pop() || "index.html";
+
     return currentPage === page ? 'class="active"' : '';
   }
 }

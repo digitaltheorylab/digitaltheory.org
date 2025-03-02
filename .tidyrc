@@ -2,7 +2,7 @@ char-encoding: utf8
 
 indent: auto
 indent-spaces: 2
-vertical-space: yes
+vertical-space: no
 wrap: 80
 
 markup: yes

@@ -17,8 +17,9 @@ html {
 
 .container {
   width: 90%;
+  max-height: 100vh;
   margin: 0 auto;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 header {
@@ -53,3 +54,26 @@ a:hover {
   color: white;
 }
 
+.person {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.person-name {
+  margin: 0;
+}
+
+.person-title, .person-institution {
+  display: inline-block;
+  margin: 0;
+}
+
+.event {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.event-person, .event-title, .event-date, .event-link {
+  display: inline-block;
+  margin: 0;
+}

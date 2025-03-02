@@ -4,22 +4,25 @@
 }
 
 html {
-  height: 95%;
-  border: solid;
-  border-radius: 1rem;
-  border-color: rgb(61, 0, 204);
-  margin: 1rem;
+  height: 100%;
   background-color: black;
   font-size: clamp(12px, 2vw, 16px);
   color: rgb(142, 205, 0);
   font-family: iosevka-nerd-term;
 }
 
+body {
+  height: 95%;
+  border: solid rgb(61, 0, 204);;
+  border-radius: 1rem;
+  margin: 1rem;
+}
+
 .container {
   width: 90%;
   max-height: 100vh;
   margin: 0 auto;
-  overflow-y: auto;
+  overflow: auto;
 }
 
 header {
@@ -54,7 +57,7 @@ a:hover {
   color: white;
 }
 
-.person {
+.person, .event {
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -63,17 +66,7 @@ a:hover {
   margin: 0;
 }
 
-.person-title, .person-institution {
-  display: inline-block;
-  margin: 0;
-}
-
-.event {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.event-person, .event-title, .event-date, .event-link {
+.person-details, .event-joined {
   display: inline-block;
   margin: 0;
 }

@@ -12,7 +12,7 @@ class NavBar extends HTMLElement {
     this.innerHTML = `
       <header>
         <div class="container header-content">
-          <div class="logo"><a href="./">Digital Theory Lab</a></div>
+          <div class="logo"><a href="./"><b>Digital Theory Lab</b></a></div>
           <nav>
             <ul>
               <li><a href="research" ${this.isActive("research")}>Research</a></li>

@@ -78,7 +78,7 @@ a:hover {
   color: white;
 }
 
-.person, .event {
+.person, .event, article {
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -87,7 +87,7 @@ a:hover {
   margin: 0;
 }
 
-.person-details, .event-joined {
+.person-details, .event-joined, .news-item {
   display: inline-block;
   margin: 0;
 }

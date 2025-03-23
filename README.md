@@ -51,11 +51,23 @@ The general workflow for making changes to the site is as follows:
 2. Make your changes
 3. Commit and push your changes
 
-Two actions will trigger when you push your changes: GitHub runs [HTML
-Tidy][tidy] to auto-format the HTML markup; GitHub also deploys the latest
-pages to the live site.
+When you push your changes, GitHub will run [HTML Tidy][tidy] to auto-format
+the HTML markup. This ensures uniformity across the site and it reduces the
+need to be overly finicky about the markup as you enter content. As long as
+your content is valid HTML (i.e. opening/closing tags match, you do not use
+boutique tags, etc.), Tidy should handle it.
 
 [tidy]: https://www.html-tidy.org/
+
+You can also make changes directly on GitHub:
+
+1. Navigate to the file you would like to change and click the pencil icon
+   ("Edit this file")
+2. Make your changes
+3. Click the green "Commit changes..." button, add a commit message in the
+   pop-up window, and select "Commit changes"
+
+Committing changes on GitHub will also run Tidy.
 
 
 ### Content templates

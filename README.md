@@ -72,7 +72,9 @@ Committing changes on GitHub will also run Tidy.
 
 ### Content templates
 
-We use a few templates to organize content on the site, as follows:
+We use a few templates to organize content on the site. To add new site
+content, copy/paste the relevant template and fill in information for all
+capitalized text. E.g, for `YYYY-MM`, you might write `2025-01`.
 
 **Research**
 
@@ -80,7 +82,7 @@ To add news items to the `research` page, use this:
 
 ```html
 <article class="news-item">
-  <time datetime="YEAR-MONTH">MONTH YEAR</time>
+  <time datetime="YYYY-MM">MONTH YEAR</time>
   <p>DESCRIPTION</p>
 </article>
 ```

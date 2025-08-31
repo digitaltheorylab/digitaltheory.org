@@ -78,7 +78,12 @@ a:hover {
   color: white;
 }
 
-.person, .event, article {
+.event {
+  display: block;
+  margin: 0.5rem;
+}
+
+.person, article {
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -97,3 +102,45 @@ a:hover {
   margin: 0;
   padding: 0;
 }
+
+.event-year {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0 0.5rem 0;
+  padding: 0.5rem;
+  border: 1px solid rgb(61, 0, 204);
+  border-radius: 0.5rem;
+  background: rgba(61, 0, 204, 0.1);
+  transition: all 0.2s ease;
+}
+
+.event-year:hover {
+  background: rgba(61, 0, 204, 0.2);
+  color: white;
+}
+
+.event-year::after {
+  content: "▼";
+  font-size: 0.8em;
+  transition: transform 0.2s ease;
+  margin-left: auto;
+}
+
+.event-year.collapsed::after {
+  transform: rotate(-90deg);
+}
+
+.event-list {
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  overflow: hidden;
+  max-height: 2000px;
+}
+
+.event-list.collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+

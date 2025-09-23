@@ -52,48 +52,84 @@ function joinEvents(event, sep = ". ") {
 /*
  * joinPeople
  *
- * Consolidates person info with title and institution, optionally linking name to website
+ * Consolidates person info with title and institution, optionally linking name 
+ * to website
  *
  * @param {Event} event - DOM event (ignored if provided)
  * @param {string} [sep=", "] - The separator between title and institution
  */
 function joinPeople(event, sep = ", ") {
-  document.querySelectorAll(".person").forEach(person => {
-    // Get all required elements
-    const personName = person.querySelector(".person-name");
-    const personTitle = person.querySelector(".person-title");
-    const personInstitution = person.querySelector(".person-institution");
-    const personLink = person.querySelector(".person-link");
+  // Get all people and march through them
+  const people = document.querySelectorAll(".person");
+  people.forEach(person => {
+    // Find all the elements we need and create document fragments for the
+    // content
+    const elements = person.querySelectorAll(".person-name, .person-title, .person-institution, .person-link");
+    const nameFragment = document.createDocumentFragment();
+    const detailsFragment = document.createDocumentFragment();
+    let linkElement = null;
     
-    // Only proceed if we have the necessary elements
-    if (!personName || !personTitle || !personInstitution) return;
-    
-    // Extract text content
-    const nameText = personName.textContent.trim();
-    const titleText = personTitle.textContent.trim();
-    const institutionText = personInstitution.textContent.trim();
-    
-    // Clear person element
-    person.innerHTML = "";
-    
-    // Create name element (with optional link)
-    const nameElement = document.createElement("p");
-    nameElement.className = "person-name";
-    
-    if (personLink && personLink.hasAttribute("href")) {
-      nameElement.innerHTML = `<a href="${personLink.getAttribute("href")}">${nameText}</a>`;
+    // Store content from each element type
+    let nameText = "";
+    let titleText = "";
+    let institutionText = "";
+    let first = true;
+
+    // Roll through each element
+    elements.forEach(el => {
+      if (el.classList.contains("person-name")) {
+        // Name
+        nameText = el.textContent.trim();
+      } else if (el.classList.contains("person-title")) {
+        // Title pieces
+        titleText = el.textContent.trim();
+        if (titleText) {
+          if (!first) detailsFragment.appendChild(document.createTextNode(sep));
+          first = false;
+          detailsFragment.appendChild(document.createTextNode(titleText));
+        }
+      } else if (el.classList.contains("person-institution")) {
+        // Institution pieces
+        institutionText = el.textContent.trim();
+        if (institutionText) {
+          if (!first) detailsFragment.appendChild(document.createTextNode(sep));
+          first = false;
+          detailsFragment.appendChild(document.createTextNode(institutionText));
+        }
+      } else if (el.classList.contains("person-link")) {
+        // Store the link for later processing
+        linkElement = el;
+      }
+    });
+
+    // Do we have what we need?
+    if (!nameText) return;
+
+    // Clear the container and rebuild with joined content
+    person.textContent = "";
+    const nameContainer = document.createElement("p");
+    nameContainer.classList.add("person-name");
+
+    // Embed link in name if we have one. Otherwise create a plaintext name
+    if (linkElement && linkElement.hasAttribute("href")) {
+      const linkNode = document.createElement("a");
+      linkNode.href = linkElement.getAttribute("href");
+      linkNode.textContent = nameText;
+      nameContainer.appendChild(linkNode);
     } else {
-      nameElement.textContent = nameText;
+      nameContainer.appendChild(document.createTextNode(nameText));
     }
     
-    // Create details element with combined information
-    const detailsElement = document.createElement("p");
-    detailsElement.className = "person-details";
-    detailsElement.textContent = `${titleText}${sep}${institutionText}`;
+    // Add name to person container
+    person.appendChild(nameContainer);
     
-    // Add elements to person container
-    person.appendChild(nameElement);
-    person.appendChild(detailsElement);
+    // Create details element if we have details content
+    if (detailsFragment.hasChildNodes()) {
+      const detailsContainer = document.createElement("p");
+      detailsContainer.classList.add("person-details");
+      detailsContainer.appendChild(detailsFragment);
+      person.appendChild(detailsContainer);
+    }
   });
 }
 

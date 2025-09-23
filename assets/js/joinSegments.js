@@ -7,44 +7,47 @@
  * @param {string} [sep=". "] - The separator
  */
 function joinEvents(event, sep = ". ") {
-  // Get the events
-  const events = document.querySelectorAll(".event");
+  // Get the events and march through them
+  const events = document.querySelectorAll(".event"); 
+  events.forEach(container => {
+    // Find paragraph elements in an event and create a document fragment to
+    // hold event content
+    const paragraphs = container.querySelectorAll("p"); 
+    const contentFrag = document.createDocumentFragment();
+    let linkFrag = null;
+    let first = true;
 
-  // March through each one
-  events.forEach(event => {
-    const elements = event.querySelectorAll("p");
-    const textParts = [];
-    let linkHTML = "";
-
-    // For each element in the event, extract the text unless the element is HTML
-    elements.forEach(element => {
-      if (element.classList.contains("event-link")) {
-        linkHTML = element.innerHTML;
+    // Run through every paragraph
+    paragraphs.forEach(p => {
+      // Is this a link? Store content separately if so
+      if (p.classList.contains("event-link")) {
+        linkFrag = document.createDocumentFragment();
+        p.childNodes.forEach(n => linkFrag.appendChild(n.cloneNode(true)));
       } else {
-        let text = element.textContent.trim();
-        textParts.push(text);
+        // If not: add separator before content (excluding first paragraph)
+        if (!first) contentFrag.appendChild(document.createTextNode(sep));
+        first = false;
+        p.childNodes.forEach(n => contentFrag.appendChild(n.cloneNode(true)));
       }
     });
 
-    // Pop out all the elements
-    while (event.firstChild) {
-      event.removeChild(event.firstChild);
+    // Clear the container and rebuild with joined content
+    container.textContent = "";
+    
+    const joined = document.createElement("p");
+    joined.classList.add("event-joined");
+    joined.appendChild(contentFrag);
+
+    // Do we have a link to append?
+    if (linkFrag) {
+      joined.appendChild(document.createTextNode(sep));
+      joined.appendChild(linkFrag);
     }
-
-    // Rebuild
-    const paragraph = document.createElement("p");
-    paragraph.classList.add("event-joined");
-
-    if (linkHTML) {
-      paragraph.innerHTML = textParts.join(sep) + sep + linkHTML;
-    } else {
-      paragraph.textContent = textParts.join(sep);
-    }
-
-    // And add
-    event.appendChild(paragraph);
+    
+    container.appendChild(joined);
   });
 }
+
 
 /*
  * joinPeople

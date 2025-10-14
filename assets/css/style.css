@@ -7,8 +7,8 @@ html {
   min-height: 100%;
   margin: 0;
   padding: 0;
-  background-color: black;
-  color: rgb(142, 205, 0);
+  background-color: rgba(250, 249, 246, 1);
+  color: rgba(0, 0, 0, 1);
   font-family: iosevka-nerd-term;
   font-size: clamp(12px, 2vw + 0.5rem, 16px);
 }
@@ -16,8 +16,6 @@ html {
 body {
   min-height: calc(100vh - 2rem);
   max-width: min(90%, 1200px);
-  border: 0.2rem solid rgb(61, 0, 204);
-  border-radius: 1rem;
   margin: 1rem auto;
   padding: 0;
   overflow-y: auto;
@@ -75,12 +73,12 @@ a, a:visited {
 }
 
 a:hover {
-  color: white;
+  color: rgb(142, 205, 0);
 }
 
 .event {
   display: block;
-  margin: 0.5rem;
+  margin: 1.5rem 0.5rem;
 }
 
 .person, article {
@@ -111,7 +109,7 @@ a:hover {
   gap: 0.5rem;
   margin: 1.5rem 0 0.5rem 0;
   padding: 0.5rem;
-  border: 1px solid rgb(61, 0, 204);
+  border: 1px solid rgb(1,1,1);
   border-radius: 0.5rem;
   background: rgba(61, 0, 204, 0.1);
   transition: all 0.2s ease;
@@ -144,3 +142,14 @@ a:hover {
   opacity: 0;
 }
 
+.event-joined a {
+  display: inline-block;
+  background: rgba(0,0,0,1);
+  color: white;
+}
+
+.event-joined a:hover {
+  display: inline-block;
+  background: rgba(61, 0, 204, 0.2);
+  color: black;
+}

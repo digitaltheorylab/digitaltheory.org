@@ -109,8 +109,8 @@ a:hover {
   gap: 0.5rem;
   margin: 1.5rem 0 0.5rem 0;
   padding: 0.5rem;
-  border: 1px solid rgb(61, 0, 204);
-  border-radius: 0.5rem;
+  border: 1px solid rgb(1,1,1);
+  /*border-radius: 0.5rem;*/
   background: rgba(61, 0, 204, 0.1);
   transition: all 0.2s ease;
 }
@@ -142,3 +142,14 @@ a:hover {
   opacity: 0;
 }
 
+.event-joined a {
+  display: inline-block;
+  background: rgba(0,0,0,1);
+  color: white;
+}
+
+.event-joined a:hover {
+  display: inline-block;
+  background: rgba(61, 0, 204, 0.2);
+  color: black;
+}

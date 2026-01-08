@@ -129,3 +129,24 @@ Second, there are bigger events (conferences, symposia, etc.):
 </li>
 ```
 
+Making a new event year? You need these components:
+
+```html
+<section id="events-YEAR">
+  <h3 class="event-year" data-year="YEAR">YEAR</h3>
+  <ul class="event-list" data-year="YEAR">
+    ...
+  </ul>
+</section>
+```
+
+Be sure to mark subsequent years' `h3` and `ul` components as `"collapsed"`,
+e.g.:
+
+```html
+<section id="events-YEAR">
+  <h3 class="event-year collapsed" data-year="YEAR">YEAR</h3>
+  <ul class="event-list collapsed" data-year="YEAR">
+  ...
+```
+
